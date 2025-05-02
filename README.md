@@ -1,2 +1,0 @@
-# Philosophers
-Philosophers
