@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static void	*eat(void *arg)
+void	*eat(void *arg)
 {
 	t_philosopher	*phil;
 	t_data			*data;
@@ -41,7 +41,7 @@ static void	*eat(void *arg)
 	return (NULL);
 }
 
-static void	*monitor(void *arg)
+void	*monitor(void *arg)
 {
 	t_data	*data;
 	int		i;
@@ -63,7 +63,7 @@ static void	*monitor(void *arg)
 	return (NULL);
 }
 
-static void	initialize_philosophers(t_data *data)
+void	initialize_philosophers(t_data *data)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ static void	initialize_philosophers(t_data *data)
 	}
 }
 
-static void	wait_for_threads(t_data *data, pthread_t monitor_thread)
+void	wait_for_threads(t_data *data, pthread_t monitor_thread)
 {
 	int	i;
 

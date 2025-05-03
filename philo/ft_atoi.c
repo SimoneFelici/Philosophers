@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfelici <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/03 18:53:55 by sfelici           #+#    #+#             */
-/*   Updated: 2025/05/03 18:53:57 by sfelici          ###   ########.fr       */
+/*   Created: 2024/12/10 19:16:22 by sfelici           #+#    #+#             */
+/*   Updated: 2024/12/10 19:16:24 by sfelici          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char **argv)
+int	ft_atoi(const char *str)
 {
-	t_data		data;
-	pthread_t	monitor_thread;
+	int	i;
+	int	nbr;
+	int	neg;
 
-	if (parse_arguments(argc, argv, &data))
-		return (1);
-	if (initialize_data(&data))
-		return (1);
-	initialize_philosophers(&data);
-	pthread_create(&monitor_thread, NULL, monitor, &data);
-	wait_for_threads(&data, monitor_thread);
-	cleanup(&data);
-	return (0);
+	i = 0;
+	nbr = 0;
+	neg = 1;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			neg *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nbr = nbr * 10 + (str[i] - '0');
+		i++;
+	}
+	return (nbr * neg);
 }

@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int	parse_arguments(int argc, char **argv, t_data *data)
+int	parse_arguments(int argc, char **argv, t_data *data)
 {
 	if (argc != 5 && argc != 6)
 	{
@@ -31,7 +31,7 @@ static int	parse_arguments(int argc, char **argv, t_data *data)
 	return (0);
 }
 
-static int	initialize_data(t_data *data)
+int	initialize_data(t_data *data)
 {
 	int	i;
 

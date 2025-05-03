@@ -30,7 +30,7 @@ static void	take_right_fork(t_philosopher *phil, t_data *data)
 	pthread_mutex_unlock(&data->printing);
 }
 
-static void	take_forks(t_philosopher *phil, t_data *data)
+void	take_forks(t_philosopher *phil, t_data *data)
 {
 	if (phil->id % 2 == 0)
 	{
@@ -44,13 +44,13 @@ static void	take_forks(t_philosopher *phil, t_data *data)
 	}
 }
 
-static void	release_forks(t_philosopher *phil)
+void	release_forks(t_philosopher *phil)
 {
 	pthread_mutex_unlock(phil->left_fork);
 	pthread_mutex_unlock(phil->right_fork);
 }
 
-static void	philosopher_eat(t_philosopher *phil, t_data *data)
+void	philosopher_eat(t_philosopher *phil, t_data *data)
 {
 	long	now;
 

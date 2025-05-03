@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static void	philosopher_sleep(t_philosopher *phil, t_data *data)
+void	philosopher_sleep(t_philosopher *phil, t_data *data)
 {
 	long	now;
 
@@ -25,7 +25,7 @@ static void	philosopher_sleep(t_philosopher *phil, t_data *data)
 		usleep(100);
 }
 
-static void	philosopher_think(t_philosopher *phil, t_data *data)
+void	philosopher_think(t_philosopher *phil, t_data *data)
 {
 	pthread_mutex_lock(&data->printing);
 	printf("%ld %d is thinking\n", get_current_time() \
@@ -33,7 +33,7 @@ static void	philosopher_think(t_philosopher *phil, t_data *data)
 	pthread_mutex_unlock(&data->printing);
 }
 
-static bool	check_simulation_end(t_data *data)
+bool	check_simulation_end(t_data *data)
 {
 	bool	end;
 
@@ -43,7 +43,7 @@ static bool	check_simulation_end(t_data *data)
 	return (end);
 }
 
-static bool	check_philosopher_death(t_data *data, int i)
+bool	check_philosopher_death(t_data *data, int i)
 {
 	long	dt;
 
@@ -63,7 +63,7 @@ static bool	check_philosopher_death(t_data *data, int i)
 	return (false);
 }
 
-static bool	check_all_philosophers_full(t_data *data)
+bool	check_all_philosophers_full(t_data *data)
 {
 	int		i;
 	bool	all_full;
