@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sfelici <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/03 18:05:50 by sfelici           #+#    #+#             */
+/*   Updated: 2025/05/03 18:05:51 by sfelici          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	*eat(void *arg)
@@ -8,7 +20,7 @@ static void	*eat(void *arg)
 
 	phil = (t_philosopher *)arg;
 	data = phil->data;
-	while (1)
+	while (true)
 	{
 		pthread_mutex_lock(&data->state_mutex);
 		if (data->simulation_end)
@@ -95,7 +107,7 @@ static void	*monitor(void *arg)
 	long	dt;
 
 	data = (t_data *)arg;
-	while (1)
+	while (true)
 	{
 		i = 0;
 		while (i < data->num_philosophers)
