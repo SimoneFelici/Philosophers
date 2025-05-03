@@ -35,7 +35,7 @@ typedef struct s_data
 	pthread_mutex_t	state_mutex;
 	t_philosopher	*philosophers;
 	long			start_time;
-}	t_data;
+}					t_data;
 
 void	cleanup(t_data *data);
 long	get_current_time(void);
