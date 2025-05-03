@@ -75,4 +75,7 @@ int		initialize_data(t_data *data);
 long	get_current_time(void);
 void	cleanup(t_data *data);
 
+/* atoi */
+int		ft_atoi(const char *str);
+
 #endif

@@ -20,12 +20,12 @@ static int	parse_arguments(int argc, char **argv, t_data *data)
 			time_to_sleep [num_meals]\n", argv[0]);
 		return (1);
 	}
-	data->num_philosophers = atoi(argv[1]);
-	data->time_to_die = atoi(argv[2]);
-	data->time_to_eat = atoi(argv[3]);
-	data->time_to_sleep = atoi(argv[4]);
+	data->num_philosophers = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		data->num_meals = atoi(argv[5]);
+		data->num_meals = ft_atoi(argv[5]);
 	else
 		data->num_meals = 0;
 	return (0);
