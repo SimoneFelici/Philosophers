@@ -33,22 +33,26 @@ static void	*eat(void *arg)
 		{
 			pthread_mutex_lock(phil->left_fork);
 			pthread_mutex_lock(&data->printing);
-			printf("%ld %d has taken a fork\n", get_current_time() - data->start_time, phil->id);
+			printf("%ld %d has taken a fork\n", get_current_time() \
+				- data->start_time, phil->id);
 			pthread_mutex_unlock(&data->printing);
 			pthread_mutex_lock(phil->right_fork);
 			pthread_mutex_lock(&data->printing);
-			printf("%ld %d has taken a fork\n", get_current_time() - data->start_time, phil->id);
+			printf("%ld %d has taken a fork\n", get_current_time() \
+				- data->start_time, phil->id);
 			pthread_mutex_unlock(&data->printing);
 		}
 		else
 		{
 			pthread_mutex_lock(phil->right_fork);
 			pthread_mutex_lock(&data->printing);
-			printf("%ld %d has taken a fork\n", get_current_time() - data->start_time, phil->id);
+			printf("%ld %d has taken a fork\n", get_current_time() \
+				- data->start_time, phil->id);
 			pthread_mutex_unlock(&data->printing);
 			pthread_mutex_lock(phil->left_fork);
 			pthread_mutex_lock(&data->printing);
-			printf("%ld %d has taken a fork\n", get_current_time() - data->start_time, phil->id);
+			printf("%ld %d has taken a fork\n", get_current_time() \
+				- data->start_time, phil->id);
 			pthread_mutex_unlock(&data->printing);
 		}
 		pthread_mutex_lock(&data->state_mutex);
@@ -80,7 +84,8 @@ static void	*eat(void *arg)
 		}
 		pthread_mutex_unlock(&data->state_mutex);
 		pthread_mutex_lock(&data->printing);
-		printf("%ld %d is sleeping\n", get_current_time() - data->start_time, phil->id);
+		printf("%ld %d is sleeping\n", get_current_time() \
+			- data->start_time, phil->id);
 		pthread_mutex_unlock(&data->printing);
 		now = get_current_time();
 		while (get_current_time() - now < data->time_to_sleep)
@@ -93,7 +98,8 @@ static void	*eat(void *arg)
 		}
 		pthread_mutex_unlock(&data->state_mutex);
 		pthread_mutex_lock(&data->printing);
-		printf("%ld %d is thinking\n", get_current_time() - data->start_time, phil->id);
+		printf("%ld %d is thinking\n", get_current_time() \
+			- data->start_time, phil->id);
 		pthread_mutex_unlock(&data->printing);
 	}
 	return (NULL);
@@ -119,7 +125,8 @@ static void	*monitor(void *arg)
 				data->simulation_end = true;
 				pthread_mutex_unlock(&data->state_mutex);
 				pthread_mutex_lock(&data->printing);
-				printf("%ld %d died\n", get_current_time() - data->start_time, data->philosophers[i].id);
+				printf("%ld %d died\n", get_current_time() - data->start_time, \
+					data->philosophers[i].id);
 				pthread_mutex_unlock(&data->printing);
 				return (NULL);
 			}
@@ -158,7 +165,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		printf("Usage: %s num_philosophers time_to_die time_to_eat time_to_sleep [num_meals]\n", argv[0]);
+		printf("Usage: %s num_philosophers time_to_die time_to_eat \
+			time_to_sleep [num_meals]\n", argv[0]);
 		return (1);
 	}
 	data.num_philosophers = atoi(argv[1]);
@@ -189,9 +197,11 @@ int	main(int argc, char **argv)
 		data.philosophers[i].last_meal_time = data.start_time;
 		data.philosophers[i].is_eating = false;
 		data.philosophers[i].left_fork = &data.forks[i];
-		data.philosophers[i].right_fork = &data.forks[(i + 1) % data.num_philosophers];
+		data.philosophers[i].right_fork = &data.forks[(i + 1) \
+			% data.num_philosophers];
 		data.philosophers[i].data = &data;
-		pthread_create(&data.philosophers[i].thread_id, NULL, eat, &data.philosophers[i]);
+		pthread_create(&data.philosophers[i].thread_id, NULL, \
+			eat, &data.philosophers[i]);
 		usleep(60);
 		i++;
 	}
