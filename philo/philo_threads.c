@@ -58,7 +58,7 @@ void	*monitor(void *arg)
 		}
 		if (check_all_philosophers_full(data))
 			return (NULL);
-		usleep(1000);
+		usleep(10);
 	}
 	return (NULL);
 }
@@ -81,7 +81,6 @@ void	initialize_philosophers(t_data *data)
 		data->philosophers[i].data = data;
 		pthread_create(&data->philosophers[i].thread_id, NULL, \
 			eat, &data->philosophers[i]);
-		usleep(60);
 		i++;
 	}
 }

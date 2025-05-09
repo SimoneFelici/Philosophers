@@ -22,7 +22,7 @@ void	philosopher_sleep(t_philosopher *phil, t_data *data)
 	pthread_mutex_unlock(&data->printing);
 	now = get_current_time();
 	while (get_current_time() - now < data->time_to_sleep)
-		usleep(100);
+		usleep(10);
 }
 
 void	philosopher_think(t_philosopher *phil, t_data *data)
@@ -70,6 +70,7 @@ bool	check_all_philosophers_full(t_data *data)
 
 	if (data->num_meals <= 0)
 		return (false);
+	pthread_mutex_lock(&data->state_mutex);
 	all_full = true;
 	i = 0;
 	while (i < data->num_philosophers)
@@ -82,9 +83,7 @@ bool	check_all_philosophers_full(t_data *data)
 		i++;
 	}
 	if (all_full)
-	{
 		data->simulation_end = true;
-		return (true);
-	}
-	return (false);
+	pthread_mutex_unlock(&data->state_mutex);
+	return (all_full);
 }

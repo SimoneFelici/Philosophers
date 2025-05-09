@@ -32,6 +32,18 @@ static void	take_right_fork(t_philosopher *phil, t_data *data)
 
 void	take_forks(t_philosopher *phil, t_data *data)
 {
+	if (data->num_philosophers == 1)
+	{
+		pthread_mutex_lock(phil->left_fork);
+		pthread_mutex_lock(&data->printing);
+		printf("%ld %d has taken a fork\n",
+			get_current_time() - data->start_time, phil->id);
+		pthread_mutex_unlock(&data->printing);
+		while (!check_simulation_end(data))
+			usleep(10);
+		pthread_mutex_unlock(phil->left_fork);
+		return ;
+	}
 	if (phil->id % 2 == 0)
 	{
 		take_left_fork(phil, data);
@@ -47,7 +59,8 @@ void	take_forks(t_philosopher *phil, t_data *data)
 void	release_forks(t_philosopher *phil)
 {
 	pthread_mutex_unlock(phil->left_fork);
-	pthread_mutex_unlock(phil->right_fork);
+	if (phil->right_fork != phil->left_fork)
+		pthread_mutex_unlock(phil->right_fork);
 }
 
 void	philosopher_eat(t_philosopher *phil, t_data *data)
@@ -58,10 +71,14 @@ void	philosopher_eat(t_philosopher *phil, t_data *data)
 	now = get_current_time();
 	printf("%ld %d is eating\n", now - data->start_time, phil->id);
 	pthread_mutex_unlock(&data->printing);
+	pthread_mutex_lock(&data->state_mutex);
 	phil->is_eating = true;
 	phil->last_meal_time = now;
-	while (get_current_time() - now < data->time_to_eat)
-		usleep(100);
 	phil->meals_eaten++;
+	pthread_mutex_unlock(&data->state_mutex);
+	while (get_current_time() - now < data->time_to_eat)
+		usleep(10);
+	pthread_mutex_lock(&data->state_mutex);
 	phil->is_eating = false;
+	pthread_mutex_unlock(&data->state_mutex);
 }
