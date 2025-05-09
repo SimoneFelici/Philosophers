@@ -40,7 +40,7 @@ void	take_forks(t_philosopher *phil, t_data *data)
 			get_current_time() - data->start_time, phil->id);
 		pthread_mutex_unlock(&data->printing);
 		while (!check_simulation_end(data))
-			usleep(10);
+			usleep(100);
 		pthread_mutex_unlock(phil->left_fork);
 		return ;
 	}
@@ -77,7 +77,7 @@ void	philosopher_eat(t_philosopher *phil, t_data *data)
 	phil->meals_eaten++;
 	pthread_mutex_unlock(&data->state_mutex);
 	while (get_current_time() - now < data->time_to_eat)
-		usleep(10);
+		usleep(100);
 	pthread_mutex_lock(&data->state_mutex);
 	phil->is_eating = false;
 	pthread_mutex_unlock(&data->state_mutex);

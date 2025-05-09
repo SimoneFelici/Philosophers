@@ -22,7 +22,7 @@ void	philosopher_sleep(t_philosopher *phil, t_data *data)
 	pthread_mutex_unlock(&data->printing);
 	now = get_current_time();
 	while (get_current_time() - now < data->time_to_sleep)
-		usleep(10);
+		usleep(100);
 }
 
 void	philosopher_think(t_philosopher *phil, t_data *data)
