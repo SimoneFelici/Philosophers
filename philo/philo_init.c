@@ -16,8 +16,8 @@ int	parse_arguments(int argc, char **argv, t_data *data)
 {
 	if (argc != 5 && argc != 6)
 	{
-		printf("Usage: %s num_philosophers time_to_die time_to_eat \
-			time_to_sleep [num_meals]\n", argv[0]);
+		printf("Usage: %s num_philosophers time_to_die time_to_eat ", argv[0]);
+		printf("time_to_sleep [num_meals]\n");
 		return (1);
 	}
 	data->num_philosophers = ft_atoi(argv[1]);
