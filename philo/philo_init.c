@@ -28,9 +28,9 @@ int	parse_arguments(int argc, char **argv, t_data *data)
 		data->num_meals = ft_atoi(argv[5]);
 	else
 		data->num_meals = 0;
-	if (data->num_philosophers <= 0 || data->time_to_die <= 0 || \
-	data->time_to_eat <= 0 || data->time_to_sleep <= 0 || \
-	(argc == 6 && data->num_meals <= 0))
+	if (data->num_philosophers <= 0 || data->time_to_die <= 0
+		|| data->time_to_eat <= 0 || data->time_to_sleep <= 0
+		|| (argc == 6 && data->num_meals <= 0))
 	{
 		return (1);
 	}

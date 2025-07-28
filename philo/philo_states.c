@@ -14,23 +14,28 @@
 
 void	philosopher_sleep(t_philosopher *phil, t_data *data)
 {
-	long	now;
+	long	start_sleep;
 
 	pthread_mutex_lock(&data->printing);
-	printf("%ld %d is sleeping\n", get_current_time() \
+	printf("%ld %d is sleeping\n", get_current_time()
 		- data->start_time, phil->id);
 	pthread_mutex_unlock(&data->printing);
-	now = get_current_time();
-	while (get_current_time() - now < data->time_to_sleep)
+	start_sleep = get_current_time();
+	while (get_current_time() - start_sleep < data->time_to_sleep)
+	{
+		if (check_simulation_end(data))
+			break ;
 		usleep(100);
+	}
 }
 
 void	philosopher_think(t_philosopher *phil, t_data *data)
 {
 	pthread_mutex_lock(&data->printing);
-	printf("%ld %d is thinking\n", get_current_time() \
+	printf("%ld %d is thinking\n", get_current_time()
 		- data->start_time, phil->id);
 	pthread_mutex_unlock(&data->printing);
+	usleep(100);
 }
 
 bool	check_simulation_end(t_data *data)
@@ -45,16 +50,25 @@ bool	check_simulation_end(t_data *data)
 
 bool	check_philosopher_death(t_data *data, int i)
 {
-	long	dt;
+	long	current_time;
+	long	time_since_last_meal;
+	bool	is_eating;
 
+	current_time = get_current_time();
 	pthread_mutex_lock(&data->state_mutex);
-	dt = get_current_time() - data->philosophers[i].last_meal_time;
-	if (dt > data->time_to_die)
+	time_since_last_meal = current_time - data->philosophers[i].last_meal_time;
+	is_eating = data->philosophers[i].is_eating;
+	if (is_eating)
+	{
+		pthread_mutex_unlock(&data->state_mutex);
+		return (false);
+	}
+	if (time_since_last_meal >= data->time_to_die)
 	{
 		data->simulation_end = true;
 		pthread_mutex_unlock(&data->state_mutex);
 		pthread_mutex_lock(&data->printing);
-		printf("%ld %d died\n", get_current_time() - data->start_time,
+		printf("%ld %d died\n", current_time - data->start_time,
 			data->philosophers[i].id);
 		pthread_mutex_unlock(&data->printing);
 		return (true);

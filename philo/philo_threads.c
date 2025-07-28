@@ -58,7 +58,7 @@ void	*monitor(void *arg)
 		}
 		if (check_all_philosophers_full(data))
 			return (NULL);
-		usleep(10);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -76,10 +76,10 @@ void	initialize_philosophers(t_data *data)
 		data->philosophers[i].last_meal_time = data->start_time;
 		data->philosophers[i].is_eating = false;
 		data->philosophers[i].left_fork = &data->forks[i];
-		data->philosophers[i].right_fork = &data->forks[(i + 1) \
+		data->philosophers[i].right_fork = &data->forks[(i + 1)
 			% data->num_philosophers];
 		data->philosophers[i].data = data;
-		pthread_create(&data->philosophers[i].thread_id, NULL, \
+		pthread_create(&data->philosophers[i].thread_id, NULL,
 			eat, &data->philosophers[i]);
 		i++;
 	}
